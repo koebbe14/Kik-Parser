@@ -1,3 +1,6 @@
+***click on "releases" to download***
+
+
 Kik Analyzer V1.5 - User Guide
 
 Introduction
