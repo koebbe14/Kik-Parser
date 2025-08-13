@@ -6,15 +6,15 @@ If you find my programs helpful or enjoy using them, feel free to buy me a coffe
 ***click on "releases" to download***
 
 
-Kik Analyzer V1.5 - User Guide
+# Kik Analyzer V1.5 - User Guide
 
-Introduction
+## Introduction
 
 Kik Analyzer V1.4-1 is a graphical user interface (GUI) application designed to analyze Kik messaging data exported from Kik's servers. It allows users to load Kik chat data, view conversations, search and filter messages, tag messages for review (e.g., for evidence or CSAM), highlight keyword hits, blur sensitive media, generate statistics, and export data to HTML or CSV formats. This tool is designed to parse and help analyze responsive records received by Kik pursuant to legal process.
 
 The application is a standalone executable file (.exe) for Windows. It processes CSV files from Kik's "text-msg-data" folder and log files from the "logs" folder, while also indexing media files from the "content" folder.
 
-Key Features:
+## Key Features:
 
 •	Load and parse Kik data folders (specifically these files: chat_platform_sent.txt, chat_platform_sent_received.txt, group_receive_msg_platform.txt, group_send_msg_plaform.txt, text-msg-data .CSV)
 •	Search and filter messages by text, date, and keywords.
@@ -31,7 +31,7 @@ System Requirements
 •	Hardware: At least 4GB RAM (for large datasets); disk space for Kik data folders (which can be gigabytes).
 •	Kik Data Export: You must have an unzipped Kik data folder from Kik (containing "content" and "logs" subfolders). Obtain this via legal means (e.g., search warrant or user export).
 
-Installation and Running the Program
+## Installation and Running the Program
 
 1.	Download the executable file KikAnalyzerV1.4.exe: 
   o	Place the file in a folder (the program will generate additional files that will be created in this same folder)
@@ -39,7 +39,7 @@ Installation and Running the Program
 2.	Run the Application: 
   o	Double click to Run the executable 
 
-Loading Kik Data
+## Loading Kik Data
 
 Upon first launch (or clicking "Load New Data" button), the app prompts you to load data.
 
@@ -64,7 +64,8 @@ Upon first launch (or clicking "Load New Data" button), the app prompts you to l
   o	Users can use the dropdown option to select particular conversations
 
 Reloading Data: Click "Load New Data" button anytime to restart the process.
-Main Interface Overview
+
+## Main Interface Overview
 
 The GUI has:
 
@@ -93,12 +94,12 @@ The GUI has:
   o	"Export": Export options dialog.
   o	"Help": Show instructions
 
-Navigation Tips:
+## Navigation Tips:
   •	Use mouse/keyboard to select rows (multi-select with Ctrl/Shift).
   •	Double-click media thumbnails to open full file.
   •	Hover for tooltips on most elements.
 
-Searching and Filtering Messages
+## Searching and Filtering Messages
 1.	Basic Search: 
   o	Enter text in "Search:" bar (e.g., "hello").
   o	Matches sender, receiver, message
@@ -115,11 +116,11 @@ Searching and Filtering Messages
   o	Matches are highlighted in green
   o	Whole-word matching per list (set when creating/editing).
 
-Results Display:
+## Results Display:
 •	Table shows filtered messages, grouped by conversation headers if "All."
 •	Keyword hits in green; tags in colors (red=CSAM, orange=Evidence, yellow=Of Interest).
 
-Managing Keyword Lists
+## Managing Keyword Lists
 
 Keyword lists highlight messages for specific terms (e.g., CSAM keywords).
 
@@ -137,7 +138,7 @@ Keyword lists highlight messages for specific terms (e.g., CSAM keywords).
 
 Tips: Lists persist across sessions. Default is empty "default.txt."
 
-Viewing and Managing Conversations
+## Viewing and Managing Conversations
 
 1.	Select Conversation: 
   o	Dropdown: Choose "All" or specific (sorted alphabetically).
@@ -149,7 +150,7 @@ Viewing and Managing Conversations
   o	Click "Show Stats" to display.
   o	Shows totals: messages, users, tagged, keyword hits, media (with sender breakdown for 1:1).
 
-Tagging Messages
+## Tagging Messages
 
 Tags flag messages (e.g., "CSAM," "Evidence").
 1.	Prebuilt Tags: CSAM (red), Evidence (orange), Of Interest (yellow).
@@ -170,13 +171,14 @@ o	Select rows, press hotkey to toggle tag.
   o	Dialog: Assign key sequences (e.g., Ctrl+4) to tags.
   o	Save and shortcuts activate.
 
-View Tagged:
+## View Tagged
+
 •	Click "View Tagged" button.
 •	Dialog: Table of tagged messages (sortable by time/conversation).
 •	Columns: Date, Time, Sender, Receiver, Message, Tags, Media.
 •	Copy selected to clipboard.
 
-Blurring Media
+## Blurring Media
 
 Protects sensitive thumbnails.
 1.	Toggle Global Blur: 
@@ -188,12 +190,12 @@ Protects sensitive thumbnails.
 
 Note: Blur affects thumbnail previews in the GUI, not originals or full size images once clicked
 
-Viewing Keyword Hits
+## Viewing Keyword Hits
 •	Click "View Keyword Hits."
 •	Dialog: Table of matches appears
 •	Similar to tagged dialog: Copy, right-click to tag (or use hotkeys)
 
-Exporting Data
+## Exporting Data
 
 Exports filtered/tagged data with options.
 1.	Open Export Dialog: 
@@ -216,12 +218,12 @@ Exports filtered/tagged data with options.
 
 Tips: Large exports may take time.
 
-Help and Additional Features
+## Help and Additional Features
 •	Help Button: Click for instructions
 •	Logging: All actions/errors in kik_analyzer.log.
 •	Config: Saves tags, hotkeys, selected keyword in config.json.
 
-Best Practices and Tips
+## Best Practices and Tips
 •	Performance: For large datasets (>10k messages), searches may lag—use filters and BE PATIENT
 •	Security: Handle sensitive data carefully; blur CSAM.
 •	Errors: Check log if having issues
