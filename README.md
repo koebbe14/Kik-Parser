@@ -3,10 +3,11 @@ If you find my programs helpful or enjoy using them, feel free to buy me a coffe
 
 
 
-***click on "releases" to download***
 
 
 # Kik Analyzer - User Guide
+
+***click on "releases" to download***
 
 ## Introduction
 
