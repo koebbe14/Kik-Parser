@@ -1,9 +1,3 @@
-<a href="https://www.buymeacoffee.com/koebbe14" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-If you find my programs helpful or enjoy using them, feel free to buy me a coffee to keep the coding vibes going! 😊
-
-
-
-
 
 # Kik Analyzer - User Guide
 
