@@ -594,7 +594,7 @@ By using this software, the user acknowledges that they have read, understood, a
 
 ## About the Developer
 
-Patrick Koebbe is an Internet Crimes Against Children (ICAC) Investigator with expertise in digital forensics tools. This software was developed to streamline Snapchat data analysis in real-world investigations.
+Patrick Koebbe is an Internet Crimes Against Children (ICAC) Investigator with expertise in digital forensics tools. This software was developed to streamline Kik data analysis in real-world investigations.
 
 For support, feature requests, or collaborations, contact: koebbe14@gmail.com.
 
