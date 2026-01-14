@@ -5,7 +5,7 @@
 
 ## Introduction
 
-Kik Analyzer V1.4-1 is a graphical user interface (GUI) application designed to analyze Kik messaging data exported from Kik's servers. It allows users to load Kik chat data, view conversations, search and filter messages, tag messages for review (e.g., for evidence or CSAM), highlight keyword hits, blur sensitive media, generate statistics, and export data to HTML or CSV formats. This tool is designed to parse and help analyze responsive records received by Kik pursuant to legal process.
+Kik Analyzer V4.1 is a graphical user interface (GUI) application designed to analyze Kik messaging data exported from Kik's servers. It allows users to load Kik chat data, view conversations, search and filter messages, tag messages for review (e.g., for evidence or CSAM), highlight keyword hits, blur sensitive media, generate statistics, and export data to HTML or CSV formats. This tool is designed to parse and help analyze responsive records received by Kik pursuant to legal process.
 
 The application is a standalone executable file (.exe) for Windows. It processes CSV files from Kik's "text-msg-data" folder and log files from the "logs" folder, while also indexing media files from the "content" folder.
 
