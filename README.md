@@ -1,225 +1,604 @@
+# Kik Analyzer V4.1
 
-# Kik Analyzer - User Guide
+[![Version](https://img.shields.io/badge/version-4.1-blue.svg)](https://github.com/Koebbe14/Kik-Parser/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
-***click on "releases" to download***
+> A professional forensic analysis tool for parsing, searching, and analyzing Kik messaging data exported from Kik's servers pursuant to legal process.
 
-## Introduction
+## 📋 Table of Contents
 
-Kik Analyzer V4.1 is a graphical user interface (GUI) application designed to analyze Kik messaging data exported from Kik's servers. It allows users to load Kik chat data, view conversations, search and filter messages, tag messages for review (e.g., for evidence or CSAM), highlight keyword hits, blur sensitive media, generate statistics, and export data to HTML or CSV formats. This tool is designed to parse and help analyze responsive records received by Kik pursuant to legal process.
+- [Overview](#overview)
+- [Features](#features)
+- [System Requirements](#system-requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [User Guide](#user-guide)
+  - [Loading Data](#loading-data)
+  - [Search and Filter](#search-and-filter)
+  - [Tagging Messages](#tagging-messages)
+  - [Keyword Management](#keyword-management)
+  - [Media Handling](#media-handling)
+  - [Export Options](#export-options)
+  - [Advanced Features](#advanced-features)
+- [Technical Details](#technical-details)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Support](#support)
 
-The application is a standalone executable file (.exe) for Windows. It processes CSV files from Kik's "text-msg-data" folder and log files from the "logs" folder, while also indexing media files from the "content" folder.
+---
 
-## Key Features:
+## Overview
 
-•	Load and parse Kik data folders (specifically these files: chat_platform_sent.txt, chat_platform_sent_received.txt, group_receive_msg_platform.txt, group_send_msg_plaform.txt, text-msg-data .CSV)
-•	Search and filter messages by text, date, and keywords.
-•	Tag messages with customizable labels and hotkeys.
-•	Blur media thumbnails globally or selectively.
-•	View tagged messages and keyword hits in dedicated dialogs.
-•	Mark conversations as "Reviewed."
-•	Display conversation statistics.
-•	Export filtered/tagged data with optional sanitization (blurring).
-•	Manage tags, hotkeys, and keyword lists.
-This guide provides step-by-step instructions for using all features.
-System Requirements
-•	Operating System: Windows
-•	Hardware: At least 4GB RAM (for large datasets); disk space for Kik data folders (which can be gigabytes).
-•	Kik Data Export: You must have an unzipped Kik data folder from Kik (containing "content" and "logs" subfolders). Obtain this via legal means (e.g., search warrant or user export).
+**Kik Analyzer V4.1** is a comprehensive graphical user interface (GUI) application designed for forensic analysis of Kik messaging data. The tool processes responsive records received from Kik pursuant to legal process, enabling investigators and analysts to efficiently parse, search, filter, tag, and export conversation data for evidentiary purposes.
 
-## Installation and Running the Program
+The application processes multiple data formats from Kik exports:
+- CSV message files from the `text-msg-data` folder
+- Log files from the `logs` folder (including `chat_platform_sent.txt`, `chat_platform_sent_received.txt`, `group_receive_msg_platform.txt`, `group_send_msg_plaform.txt`)
+- Media files (images and videos) from the `content` folder
 
-1.	Download the executable file KikAnalyzerV1.4.exe: 
-  o	Place the file in a folder (the program will generate additional files that will be created in this same folder)
+---
 
-2.	Run the Application: 
-  o	Double click to Run the executable 
+## Features
 
-## Loading Kik Data
+### Core Functionality
 
-Upon first launch (or clicking "Load New Data" button), the app prompts you to load data.
+- **Multi-Format Data Parsing**: Automatically parses CSV files, log files, and indexes media files from Kik data exports
+- **Conversation Management**: Groups messages into individual and group conversations with intuitive navigation
+- **Advanced Search & Filter**: 
+  - Full-text search across messages, senders, and receivers
+  - Exact word matching option
+  - Date range filtering
+  - Search across all conversations or filter by selected conversation
+- **Keyword Highlighting**: Create and manage keyword lists for automatic message highlighting (useful for CSAM detection, evidence identification, etc.)
+- **Message Tagging System**: 
+  - Pre-built tags: CSAM, Evidence, Of Interest
+  - Custom tag creation and management
+  - Keyboard hotkeys for rapid tagging (default: Ctrl+1, Ctrl+2, Ctrl+3)
+  - Multi-select tagging support
+- **Media Management**:
+  - Thumbnail previews in message table
+  - Global and per-item media blurring for sensitive content protection
+  - Full-size media viewer
+  - Media file indexing and linking
+- **Export Capabilities**:
+  - HTML export with interactive features (dark mode, search, filtering)
+  - CSV export with customizable field selection
+  - Optional media sanitization (blurring) in exports
+  - MD5 hash generation for all files
+  - Complete data package with copied media, logs, and CSV files
+- **Statistics Dashboard**: Comprehensive statistics panel showing message counts, user breakdowns, tagged messages, keyword hits, and media statistics
+- **Review Tracking**: Mark conversations as reviewed to track analysis progress
 
-1.	Select Kik Data Folder: 
-  o	A message box appears: "Import Kik Data Folder."
-  o	A file dialog opens: Choose the root Kik data folder containing the unzipped Kik folder containing "content" (with media files and "text-msg-data"   subfolder) and "logs" (with .txt log files).
-  o	Click "OK" to proceed or "Cancel" to exit.
-  o	If the folder is invalid (missing subfolders), an error pops up—retry.
+### Advanced Features
 
-2.	Select CSV Files: 
-  o	A "Select Kik Message CSV Files" dialog opens.
-  o	It points to the "text-msg-data" folder inside "content."
-  o	Click "Browse..." to select one or more .CSV files (e.g., chat messages).
-  o	Selected files appear in the text area.
-  o	Click "OK" to load.
-  o	If no files are selected or invalid, an error appears—retry.
-  3.	Data Processing: 
-  o	The app indexes media files (images/videos) from "content."
-  o	CSVs and logs (e.g., chat_platform_sent.txt) for messages will be parsed.
-  o	Messages are grouped into conversations (1:1 or groups) and sent/received media is included in the parsed conversations
-  o	The Status bar shows "Data loaded successfully”, and All Conversations messages will appear in the GUI
-  o	Users can use the dropdown option to select particular conversations
+- **Undo/Redo System**: 50-action history for tagging and review operations
+- **Conversation Notes**: Add notes to conversations for case documentation
+- **Theme Support**: Light and dark mode with customizable color schemes
+- **Update Checking**: Automatic version checking via GitHub API
+- **Configurable Settings**: Persistent configuration for tags, hotkeys, keyword lists, and preferences
+- **Cell Border Highlighting**: Visual emphasis for specific messages or cells
+- **Comprehensive Logging**: Optional detailed logging to `kik_analyzer.log` for troubleshooting
 
-Reloading Data: Click "Load New Data" button anytime to restart the process.
+---
 
-## Main Interface Overview
+## System Requirements
 
-The GUI has:
+### Minimum Requirements
 
-•	Top Controls (Group Box): 
-  o	Search bar: Text input for filtering messages, sender, receiver.
-  o	"Exact Word Match" checkbox: For whole-word searching. (e.g., "cat" won't match "category").
-  o	"Search All Conversations" checkbox: Search across all conversations vs. only the selected.
-  o	Date filters: "From" and "To" date pickers.
-  o	"Keyword List:" dropdown: Select a list for highlighting.
-  o	"Create New Keyword List" and "Edit Keywords" buttons.
-  o	"Conversation:" dropdown: Select to view.
-•	Search Results Label: "Found X messages."
-•	Message Table: Columns: Date, Time, Sender, Receiver, Message, Tags, Media. 
-  o	Media column shows thumbnails (click to open full media).
-  o	Right-click messages to tag or use Hotkeys (multiple messages can be selected and simultaneously tagged)
-•	Stats Panel: Hidden by default; shows message counts, users, etc.
-•	Toolbar (Bottom Buttons): 
-  o	"View Tagged": Open tagged messages dialog.
-  o	"View Keyword Hits": Open keyword matches dialog.
-  o	"Mark as Reviewed": Toggles “[Reviewed]” on selected conversation in dropdown menu
-  o	"Manage Tags": Edit available tags.
-  o	"Manage Hotkeys": Assign shortcuts to tags.
-  o	"Blur Media": Toggle thumbnail blur.
-  o	"Show Stats": Toggle stats panel.
-  o	"Load New Data": Reload data.
-  o	"Export": Export options dialog.
-  o	"Help": Show instructions
+- **Operating System**: Windows 7 or later (64-bit recommended)
+- **RAM**: 4 GB minimum (8 GB recommended for large datasets)
+- **Storage**: Sufficient disk space for Kik data folders (can range from hundreds of MB to several GB)
+- **Display**: 1280x720 resolution minimum (1920x1080 recommended)
 
-## Navigation Tips:
-  •	Use mouse/keyboard to select rows (multi-select with Ctrl/Shift).
-  •	Double-click media thumbnails to open full file.
-  •	Hover for tooltips on most elements.
+### Data Requirements
 
-## Searching and Filtering Messages
-1.	Basic Search: 
-  o	Enter text in "Search:" bar (e.g., "hello").
-  o	Matches sender, receiver, message
-  o	Results update in table after a short delay.
-2.	Exact Word Match: 
-  o	Check "Exact Word Match" for whole-word search (e.g., "hi" won't match "high").
-3.	Search All Conversations: 
-  o	Check to search across all; uncheck for selected conversation only.
-4.	Date Filtering: 
-  o	Set "From:" and "To:" dates via calendar popups.
-  o	Filters messages within the range.
-5.	Keyword Highlighting: 
-  o	Select a list from "Keyword List:" dropdown
-  o	Matches are highlighted in green
-  o	Whole-word matching per list (set when creating/editing).
+- **Kik Data Export**: Unzipped Kik data folder obtained through legal means (search warrant, etc.)
+- **Required Folder Structure**:
+  ```
+  Kik Data Folder/
+  ├── content/
+  │   ├── text-msg-data/
+  │   │   └── *.csv (message files)
+  │   └── [media files]
+  └── logs/
+      └── *.txt (log files)
+  ```
 
-## Results Display:
-•	Table shows filtered messages, grouped by conversation headers if "All."
-•	Keyword hits in green; tags in colors (red=CSAM, orange=Evidence, yellow=Of Interest).
+---
 
-## Managing Keyword Lists
+## Installation
 
-Keyword lists highlight messages for specific terms (e.g., CSAM keywords).
+### Download
 
-1.	Select List: 
-  o	Use dropdown to choose (loads from "keywords" folder as .txt files).
-2.	Create New List: 
-  o	Click "Create New Keyword List."
-  o	Dialog: Enter "List Name," keywords (one per line in text area).
-  o	Check "Exact Word Matching" for whole words.
-  o	Click "OK" to save as .txt in "keywords" folder.
-3.	Edit Existing List: 
-  o	Select list, click "Edit Keywords."
-  o	Edit name (disabled for existing), keywords, whole-word checkbox.
-  o	Save updates the .txt file.
+1. Navigate to the [Releases](https://github.com/Koebbe14/Kik-Parser/releases) page
+2. Download the latest `KikAnalyzerV4.1.exe` file
+3. Place the executable in your desired installation directory
 
-Tips: Lists persist across sessions. Default is empty "default.txt."
+> **Note**: The application will create configuration files, keyword lists, and logs in the directory:  C:\Users\\[Username]
 
-## Viewing and Managing Conversations
+### First Run
 
-1.	Select Conversation: 
-  o	Dropdown: Choose "All" or specific (sorted alphabetically).
-  o	Table updates with messages, sorted by timestamp.
-2.	Mark as Reviewed: 
-  o	Select conversation, click "Mark as Reviewed."
-  o	Adds "[Reviewed]" to dropdown label; toggles off/on.
-3.	Stats Panel: 
-  o	Click "Show Stats" to display.
-  o	Shows totals: messages, users, tagged, keyword hits, media (with sender breakdown for 1:1).
+1. Double-click `KikAnalyzerV4.1.exe` to launch the application
+2. The application will prompt you to load Kik data on first launch
+3. Configuration files (`config.json`) will be created automatically
 
-## Tagging Messages
+---
 
-Tags flag messages (e.g., "CSAM," "Evidence").
-1.	Prebuilt Tags: CSAM (red), Evidence (orange), Of Interest (yellow).
-2.	Tag a Message: 
-  o	Select row(s) in table.
-  o	Right-click message column: "Tag Message" menu.
-  o	Dialog: Check tags to apply (multi-select).
-  o	Tags appear in "Tags" column; row color updates.
-3.	Hotkeys: 
-  o	Default: Ctrl+1=CSAM, Ctrl+2=Evidence, Ctrl+3=Of Interest.
-o	Select rows, press hotkey to toggle tag.
-4.	Manage Tags: 
-  o	Click "Manage Tags" button.
-  o	Dialog: List of tags; Add/Edit/Delete.
-  o	Save updates available tags.
-5.	Manage Hotkeys: 
-  o	Click "Manage Hotkeys."
-  o	Dialog: Assign key sequences (e.g., Ctrl+4) to tags.
-  o	Save and shortcuts activate.
+## Quick Start
 
-## View Tagged
+1. **Launch Application**: Double-click `KikAnalyzerV4.1.exe`
+2. **Load Data**: Click "Load New Data" and select your unzipped Kik data folder
+3. **Select CSV Files**: Choose one or more CSV files from the `text-msg-data` folder
+4. **Select Conversation**: Use the dropdown to choose a conversation to analyze
+5. **Search & Filter**: Use the search bar and date filters to find specific messages
+6. **Tag Messages**: Right-click messages or use hotkeys (Ctrl+1, Ctrl+2, Ctrl+3) to tag
+7. **Export Results**: Click "Export" to save filtered/tagged data in HTML or CSV format
 
-•	Click "View Tagged" button.
-•	Dialog: Table of tagged messages (sortable by time/conversation).
-•	Columns: Date, Time, Sender, Receiver, Message, Tags, Media.
-•	Copy selected to clipboard.
+---
 
-## Blurring Media
+## User Guide
 
-Protects sensitive thumbnails.
-1.	Toggle Global Blur: 
-  o	Click "Blur Media" to blur all thumbnail media.  Click again to unblur all thumbnail media
-  o	The “Blur Media” button works independently of locally blurring an individual thumbnail via the right click > blur feature
-2.	Local Blur (right click): 
-  o	Right-click thumbnail: "Blur Media" / "Unblur Media" for that item only.  This stays persistent regardless of the state of the “Blur Media” toggle button
-3.	Export Blurring: Covered in Export section (CSAM-only or all).
+### Loading Data
 
-Note: Blur affects thumbnail previews in the GUI, not originals or full size images once clicked
+#### Initial Data Load
 
-## Viewing Keyword Hits
-•	Click "View Keyword Hits."
-•	Dialog: Table of matches appears
-•	Similar to tagged dialog: Copy, right-click to tag (or use hotkeys)
+1. Click the **"Load New Data"** button in the toolbar
+2. In the file dialog, navigate to and select the root Kik data folder containing:
+   - `content` subfolder (with `text-msg-data` and media files)
+   - `logs` subfolder (with `.txt` log files)
+3. Click **"OK"** to proceed
+4. In the CSV selection dialog, browse and select one or more CSV files from the `text-msg-data` folder
+5. Click **"OK"** to begin processing
 
-## Exporting Data
+#### Data Processing
 
-Exports filtered/tagged data with options.
-1.	Open Export Dialog: 
-  o	Click "Export."
-  o	Dialog: Scope (Tagged, Selected Conversation, All), Sanitize (Blur CSAM-only or All), Format (HTML/CSV), Sort By (User/Conversation or Timestamp), Fields to Include.
-2.	Options: 
-  o	Scope: Check one (e.g., "Tagged Messages").
-  o	Sanitize: Blur medial in export
-  o	Format: HTML (styled table with links) or CSV.
-  o	Sort: By conversation or time.
-  o	Fields: Select all or specific (e.g., exclude IP).
-  o	Click "OK," choose save location.
-3.	HTML Export Details: 
-  o	Includes summary stats, dark mode toggle, search/filter
-  o	Media: Embedded thumbnails (blurred if selected); links to full (blurred/original).
-  o	Hashes (MD5) of all files (media, CSVs, logs).
-  o	Copied media/logs/CSVs to subfolder.
-4.	CSV Export: 
-  o	Simple table with selected fields.
+During data loading, the application will:
+- Index all media files (images/videos) from the `content` folder
+- Parse CSV files for message data
+- Parse log files for additional message metadata
+- Group messages into conversations (1:1 chats and group chats)
+- Associate sent/received media with conversations
+- Display "Data loaded successfully" in the status bar
 
-Tips: Large exports may take time.
+#### Reloading Data
 
-## Help and Additional Features
-•	Help Button: Click for instructions
-•	Logging: All actions/errors in kik_analyzer.log.
-•	Config: Saves tags, hotkeys, selected keyword in config.json.
+Click **"Load New Data"** at any time to restart the data loading process or load another case. This will clear existing data and load fresh data.
 
-## Best Practices and Tips
-•	Performance: For large datasets (>10k messages), searches may lag—use filters and BE PATIENT
-•	Security: Handle sensitive data carefully; blur CSAM.
-•	Errors: Check log if having issues
+---
 
+### Search and Filter
+
+#### Basic Text Search
+
+1. Enter search terms in the **"Search:"** text field
+2. The search automatically filters messages matching:
+   - Message content
+   - Sender name
+   - Receiver name
+3. Results update automatically after a brief delay (debounced for performance)
+
+#### Exact Word Matching
+
+- Check the **"Exact Word Match"** checkbox to enable whole-word searching
+- Example: Searching "cat" will not match "category" or "scatter"
+
+#### Search Scope
+
+- **Unchecked**: Searches only within the selected conversation
+- **Checked ("Search All Conversations")**: Searches across all conversations
+
+#### Date Range Filtering
+
+1. Click the **"From:"** date picker to set the start date
+2. Click the **"To:"** date picker to set the end date
+3. Leave dates empty to include all messages
+4. Messages are filtered to show only those within the specified date range
+
+#### Search Results
+
+- The label above the message table displays: **"Found X messages"**
+- Messages are displayed in a sortable table with columns: Date, Time, Sender, Receiver, Message, Tags, Media
+- Keyword hits are highlighted in green
+- Tagged messages display colored tags in the Tags column
+
+---
+
+### Tagging Messages
+
+#### Pre-built Tags
+
+The application includes three pre-built tags with default colors:
+- **CSAM** (Red) - For child sexual abuse material
+- **Evidence** (Orange) - For evidentiary messages
+- **Of Interest** (Yellow) - For messages requiring further review
+
+#### Tagging via Context Menu
+
+1. Select one or more message rows (use Ctrl+Click or Shift+Click for multiple selection)
+2. Right-click on the selected message(s)
+3. Choose **"Tag Message"** from the context menu
+4. In the dialog, check the tags you want to apply
+5. Click **"OK"** to apply tags
+
+#### Tagging via Hotkeys
+
+Default hotkeys:
+- **Ctrl+1**: Toggle CSAM tag
+- **Ctrl+2**: Toggle Evidence tag
+- **Ctrl+3**: Toggle Of Interest tag
+
+To use:
+1. Select one or more message rows
+2. Press the appropriate hotkey combination
+3. Tags are toggled on/off for selected messages
+
+#### Managing Tags
+
+1. Click the **"Manage Tags"** button in the toolbar
+2. In the dialog:
+   - **Add**: Create new custom tags
+   - **Edit**: Modify existing tag names and colors
+   - **Delete**: Remove tags (pre-built tags cannot be deleted)
+3. Click **"Save"** to apply changes
+
+#### Managing Hotkeys
+
+1. Click the **"Manage Hotkeys"** button in the toolbar
+2. Assign key sequences (e.g., Ctrl+4, Ctrl+5) to tags
+3. Click **"Save"** to activate shortcuts
+
+---
+
+### Keyword Management
+
+#### Creating Keyword Lists
+
+1. Click **"Create New Keyword List"** button
+2. Enter a list name in the dialog
+3. Add keywords (one per line) in the text area
+4. Check **"Exact Word Matching"** if you want whole-word matching for all keywords in the list
+5. Click **"OK"** to save (saved in the KikParser_config.json)
+
+#### Editing Keyword Lists
+
+1. Select a keyword list from the **"Keyword List:"** dropdown
+2. Click **"Edit Keywords"** button
+3. Modify the list name (for new lists), keywords, or matching options
+4. Click **"OK"** to save changes
+
+#### Using Keyword Lists
+
+1. Select a keyword list from the **"Keyword List:"** dropdown
+2. Messages containing matching keywords are automatically highlighted in specified color
+3. Matching behavior (exact word or partial) is determined by the list's settings
+
+#### Viewing Keyword Hits
+
+1. Click the **"View Keyword Hits"** button in the toolbar
+2. A dedicated dialog displays all messages containing keyword matches
+3. You can tag, or copy messages from this dialog
+
+---
+
+### Media Handling
+
+#### Viewing Media
+
+- **Thumbnails**: Media files are displayed as thumbnails in the "Media" column of the message table
+- **Full Size**: Double-click a thumbnail to open the full-size image/video in your default viewer
+
+#### Blurring Media
+
+**Global Blur Toggle:**
+- Click the **"Blur Media"** button to blur all media thumbnails globally
+- Click again to unblur all thumbnails
+- This affects only thumbnail previews, not original files
+
+**Per-Item Blur:**
+- Right-click on a specific media thumbnail
+- Select **"Blur Media"** or **"Unblur Media"** from the context menu
+- Per-item blur settings persist independently of the global blur toggle
+
+**Export Blurring:**
+- When exporting, you can choose to blur:
+  - CSAM-tagged media only
+  - All media
+- Blurred media in exports protects sensitive content while maintaining file integrity
+
+---
+
+### Export Options
+
+#### Opening Export Dialog
+
+1. Click the **"Export"** button in the toolbar
+2. The export options dialog appears with multiple configuration options
+
+#### Export Scope
+
+Select what to export:
+- **Tagged Messages**: Export only messages that have been tagged
+- **Selected Conversation**: Export messages from the currently selected conversation
+- **All Conversations**: Export all messages from all conversations
+
+#### Sanitization Options
+
+- **Blur CSAM Only**: Blur media in messages tagged as CSAM
+- **Blur All Media**: Blur all media in the export
+- **No Blurring**: Export media without blurring
+
+#### Export Format
+
+**HTML Export:**
+- Interactive HTML file with:
+  - Summary statistics
+  - Dark mode toggle
+  - Built-in search and filtering
+  - Embedded media thumbnails (blurred if selected)
+  - Links to full-size media files
+  - MD5 hash table for all files (media, CSVs, logs)
+  - Complete data package: exported HTML, media files, logs, and CSV files in organized subfolders
+
+**CSV Export:**
+- Simple CSV table with selected fields
+- Suitable for import into spreadsheet applications or databases
+
+#### Field Selection
+
+Choose which fields to include in the export:
+- Date/Time
+- Sender/Receiver
+- Message content
+- Tags
+- Media references
+- IP addresses
+- Port numbers
+- Content IDs
+- Conversation names
+- Notes
+
+#### Sorting Options
+
+- **By Conversation/User**: Group messages by conversation
+- **By Timestamp**: Sort chronologically
+
+#### Export Process
+
+1. Configure all export options
+2. Click **"OK"**
+3. Choose the save location and filename
+4. Wait for processing (large exports may take several minutes)
+5. A success message displays when export is complete
+
+---
+
+### Advanced Features
+
+#### Statistics Panel
+
+1. Click **"Show Stats"** button to toggle the statistics panel
+2. View comprehensive statistics:
+   - Total message count
+   - Number of unique users
+   - Tagged message counts
+   - Keyword hit counts
+   - Media file counts
+   - Sender breakdown (for 1:1 conversations)
+
+#### Conversation Management
+
+**Mark as Reviewed:**
+- Select a conversation from the dropdown
+- Click **"Mark as Reviewed"** button
+- The conversation label updates with "[Reviewed]" prefix
+- Toggle on/off to track review status
+
+**Conversation Notes:**
+- Add notes to conversations for case documentation
+- Notes are included in exports when the "notes" field is selected
+- Access notes through the conversation context menu
+
+#### Undo/Redo
+
+- **Undo**: Press Ctrl+Z to undo the last tagging or review action (up to 50 actions)
+- **Redo**: Press Ctrl+Y to redo an undone action
+- Useful for correcting accidental tag applications
+
+#### Theme Customization
+
+- The application supports light and dark themes
+- Access color settings through the via the View button
+- Color settings are saved in configuration
+
+#### Update Checking
+
+- Click the **"Check for Updates"** button to check for newer versions
+- The application connects to GitHub to check for updates
+- If an update is available, you'll be directed to the releases page
+
+---
+
+## Technical Details
+
+### File Formats Supported
+
+- **CSV Files**: Comma-separated values from Kik's `text-msg-data` folder
+- **Log Files**: Plain text log files from Kik's `logs` folder:
+  - `chat_platform_sent.txt`
+  - `chat_platform_sent_received.txt`
+  - `group_receive_msg_platform.txt`
+  - `group_send_msg_plaform.txt`
+- **Media Files**: Images and videos indexed from the `content` folder
+
+### Configuration Files
+
+- **KikParser_config.json**: Stores application settings, tags, hotkeys, and preferences
+- **kik_analyzer.log**: Optional logging file (disabled by default)
+
+### Data Processing
+
+- Messages are parsed and grouped by conversation ID
+- Timestamps are normalized and sorted chronologically
+- Media files are indexed by content ID and linked to messages
+- Large datasets are processed with progress indicators
+
+### Performance Considerations
+
+- **Search Debouncing**: 600ms delay for text search, 1000ms for date filters
+- **Caching**: Thumbnail cache (200 items) for improved performance
+- **Threading**: Background processing for data loading and searching
+- **Memory Management**: Efficient handling of large datasets
+
+### Security Features
+
+- Media blurring for sensitive content protection
+- MD5 hash generation for file integrity verification
+- Optional logging for audit trails
+- Secure handling of sensitive data
+
+---
+
+## Best Practices
+
+### Performance Optimization
+
+- **Large Datasets**: For datasets with >10,000 messages:
+  - Use conversation filters to narrow scope
+  - Apply date range filters before searching
+  - Be patient during initial data loading
+  - Consider exporting subsets rather than entire datasets
+
+### Data Security
+
+- **Sensitive Content**: Always blur CSAM and other sensitive media before sharing exports
+- **File Integrity**: Use MD5 hashes provided in HTML exports to verify file integrity
+- **Secure Storage**: Store Kik data folders and exports in secure, encrypted locations
+- **Access Control**: Limit access to the application and data files to authorized personnel only
+
+### Workflow Recommendations
+
+1. **Initial Review**: Load data and review conversation list
+2. **Keyword Screening**: Create and apply keyword lists for initial screening
+3. **Systematic Tagging**: Use consistent tagging methodology (e.g., CSAM, Evidence, Of Interest)
+4. **Review Tracking**: Mark conversations as reviewed as you complete analysis
+5. **Documentation**: Add conversation notes for important findings
+6. **Export Strategy**: Export tagged messages and keyword hits for further analysis
+7. **Verification**: Review exported data and verify MD5 hashes
+
+### Tagging Best Practices
+
+- Use consistent tag names and meanings across cases
+- Document tag definitions in case notes
+- Use hotkeys for frequently applied tags
+- Review tagged messages periodically using "View Tagged" dialog
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**"Data loaded successfully" but no messages appear:**
+- Verify CSV files contain valid message data
+- Check that date filters are not excluding all messages
+- Ensure conversation dropdown is set to "All" or a valid conversation
+
+**Search not working:**
+- Clear search field and try again
+- Uncheck "Exact Word Match" if partial matches are expected
+- Verify you're searching in the correct conversation scope
+
+**Media thumbnails not displaying:**
+- Verify media files exist in the `content` folder
+- Check file paths in the original Kik data structure
+- Ensure media files are not corrupted
+
+**Export taking too long:**
+- Large exports (10,000+ messages) may take 10+ minutes
+- Consider exporting smaller subsets
+- Ensure sufficient disk space for export files
+
+**Application crashes or freezes:**
+- Check `kik_analyzer.log` for error messages
+- Verify Kik data folder structure is correct
+- Ensure sufficient RAM (4GB minimum, 8GB recommended)
+- Try reloading data
+
+### Logging
+
+To enable detailed logging for troubleshooting:
+- Logging is disabled by default
+- If enabled, logs are written to `kik_analyzer.log` in the user's home directory
+- Logs include timestamps, log levels, and detailed error messages
+
+### Getting Help
+
+1. Check the **"Help"** button in the application for built-in instructions
+2. Review this README for detailed feature documentation
+3. Check the log file (`kik_analyzer.log`) for error details
+4. Verify your Kik data folder structure matches requirements
+
+---
+
+## Support
+
+### Version Information
+
+- **Current Version**: 4.1
+- **Release Notes**: Includes delete keyword list feature and various improvements
+
+### Updates
+
+- Check for updates via the application's update checker
+- Visit the [Releases](https://github.com/Koebbe14/Kik-Parser/releases) page for latest version
+- Updates are released on GitHub
+
+### Legal Notice
+
+This tool is designed for use with Kik data obtained through legal process (search warrants, etc.). Users are responsible for ensuring they have proper legal authority to access and analyze the data. The tool is provided "as-is" without warranty.
+
+### License
+
+Proprietary software. All rights reserved.
+
+---
+
+## Acknowledgments
+
+Kik Analyzer V4.1 is developed for forensic analysis purposes. The tool processes data exported from Kik's servers pursuant to legal process and is intended for use by law enforcement, legal professionals, and authorized investigators.
+
+---
+
+## License
+
+Permission is hereby granted to law-enforcement agencies, digital-forensic analysts, and authorized investigative personnel ("Authorized Users") to use and copy this software for the purpose of criminal investigations, evidence review, training, or internal operational use.
+
+The following conditions apply:
+
+1. **Redistribution:** This software may not be sold, published, or redistributed to the general public. Redistribution outside an authorized agency requires written permission from the developer.
+
+2. **No Warranty:** This software is provided "AS IS," without warranty of any kind, express or implied, including but not limited to the warranties of accuracy, completeness, performance, non-infringement, or fitness for a particular purpose. The developer shall not be liable for any claim, damages, or other liability arising from the use of this software, including the handling of digital evidence.
+
+3. **Evidence Integrity:** Users are responsible for maintaining forensic integrity and chain of custody when handling evidence. This software does not alter source evidence files and is intended only for analysis and review.
+
+4. **Modifications:** Agencies and investigators may modify the software for internal purposes. Modified versions may not be publicly distributed without permission from the developer.
+
+5. **Logging & Privacy:** Users are responsible for controlling log files and output generated during use of the software to prevent unauthorized disclosure of sensitive or personally identifiable information.
+
+6. **Compliance:** Users agree to comply with all applicable laws, departmental policies, and legal requirements when using the software.
+
+By using this software, the user acknowledges that they have read, understood, and agreed to the above terms.
+
+---
+
+## About the Developer
+
+Patrick Koebbe is an Internet Crimes Against Children (ICAC) Investigator with expertise in digital forensics tools. This software was developed to streamline Snapchat data analysis in real-world investigations.
+
+For support, feature requests, or collaborations, contact: koebbe14@gmail.com.
+
+
+**Last Updated**: 2026  
+**Version**: 4.1  
+**Platform**: Windows
