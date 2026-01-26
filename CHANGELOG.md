@@ -1,102 +1,74 @@
-# Changelog
+# Changelog - KikAnalyzer V4.2
 
-## Recent Updates
+## Session Changes Summary
 
-### Color Customization System
-- **Added**: Comprehensive color settings feature allowing users to customize all application colors
-  - New "Color Settings" option in View menu
-  - Separate tabs for Light Mode and Dark Mode color customization
-  - Color picker dialog with preview swatches showing current colors
-  - All color changes are persistent and saved to `KikParser_config.json`
-  - "Reset to Default" option to restore original color scheme
-  - Color previews update in real-time as colors are changed
+### Data Processing & Deduplication
 
-- **Added**: Custom color support in ThemeManager
-  - Extended ThemeManager to support user-defined color overrides
-  - Custom colors take precedence over default theme colors
-  - Custom colors are preserved when switching between light and dark modes
-  - All UI components respect custom color settings
+#### Added support for text-msg-data.csv files containing a "content_id" column
+- **Issue**: Prior versions of the program will built around text-msg-data.csv files not containing a "content_id" column.  Instead, the content_id was obtained from various log .txt files.  Recieved media has been identifed in these new versions of the text-msg-data.csv files but not listed in the associated log files
+- **Fix**: Added support to find, analyze, and parse the text-msg-data.csv file for "content_IDs"
+- **Result**: Media files are now properly displayed if the records come from either the log files or the .csv files.  If the same content_id is found in mulitple records and has the same sender/user/time/date/ip, then the data is aggragated and compiled as one entry
 
-- **Enhanced**: HTML Export color integration
-  - HTML exports now use current theme colors (including custom colors)
-  - Color legend in HTML reports reflects custom color settings
-  - Dynamic CSS generation based on active theme and custom colors
-  - Both light and dark mode colors are embedded in HTML for theme switching
 
-- **Changed**: Default color scheme updated
-  - New professional color palette for light mode
-  - Improved contrast and readability
-  - Updated tag colors to use Bootstrap-inspired professional colors
-  - HTML table header color changed from green to medium gray (#6c757d)
+### User Interface Improvements
 
-- **Improved**: Color legend in Help dialog
-  - Color legend now displays actual custom colors when applied
-  - Removed descriptive text names, showing only color swatches
-  - Legend dynamically updates to reflect current color settings
+#### Dialog Window Sizing for Laptop Displays
+- **Issue**: Initial dialog windows ("Import Kik Data" and "Select Kik Message CSV Files") were too small with hard-to-read text on laptop displays.
+- **Fixes**:
+  - **Import Kik Data Dialog**:
+    - Window size increased from 700x600 to 1200x900 pixels.
+    - Label font size increased to 24pt (QFont) and 26px (HTML).
+    - Heading font size increased to 31px (HTML).
+    - Button font size increased to 22pt with larger padding (18px 31px).
+    - Button minimum size increased to 176x55 pixels.
+  
+  - **Select Kik Message CSV Files Dialog**:
+    - Window size increased from 900x650 to 1200x900 pixels.
+    - Minimum size increased from 880x660 to 1100x800 pixels.
+    - All font sizes increased proportionally (labels: 24pt, buttons: 22pt, text edit: 22px).
+    - Button sizes and padding increased to match Import dialog.
 
-### Custom Cell Borders Feature
-- **Added**: Custom cell border functionality allowing users to highlight individual cells
-  - Right-click context menu with "Add Border" and "Remove Border" options
-  - Borders are customizable via Color Settings dialog (default: bold red)
-  - Borders persist across sessions and are saved in configuration
-  - Borders appear in HTML exports with the same styling
-  - Supports selecting individual cells or multiple cells (Ctrl+Click)
+#### Automatic Update Checking
+- **Feature**: Added automatic update checking on application startup.
+- **Behavior**:
+  - Checks for updates automatically 1 second after the main GUI is displayed.
+  - Only shows a message if an update is available (same message as manual check).
+  - Silently fails if no update is available or if there's an error (no message shown).
+  - Manual "Check for updates" button still works as before, showing all messages including "up to date" status.
 
-### Cell Selection Improvements
-- **Changed**: Table selection behavior from row-only to cell-level selection
-  - Users can now select individual cells or multiple cells
-  - Supports Ctrl+Click for multiple cell selection
-  - Shift+Click for range selection
-  - Entire rows can still be selected by selecting all cells in the row
+### Border Feature Enhancements
 
-### Copy Functionality
-- **Added**: Copy selected cells to clipboard
-  - Right-click context menu "Copy" option
-  - Ctrl+C keyboard shortcut support
-  - Copies cells as tab-separated values (TSV) for easy pasting into Excel/Notepad
-  - Maintains row/column structure when copying multiple cells
+#### Selection Region Borders
+- **Issue**: When multiple cells were selected, "Add Border" placed individual borders around each cell instead of one border around the entire selection.
+- **Fix**: 
+  - Modified border logic to detect multiple cell selections.
+  - When multiple cells are selected, calculates the bounding rectangle and draws a single border around the entire selection region.
+  - Single cell selections still work as before (individual cell borders).
+  - Selection region borders are stored separately and persist in configuration.
 
-### Save Progress Enhancement
-- **Added**: Cell borders are now saved and restored with the "Save Progress" feature
-  - Cell borders are included in `KikParser_progress.json` files
-  - Borders are automatically restored when loading saved progress
-  - Table refreshes to display restored borders
+#### Increased Border Thickness
+- **Enhancement**: Increased border line thickness from 3px to 5px for better visibility.
+- **Applies to**: Both individual cell borders and selection region borders.
 
-### Bug Fixes
-- **Fixed**: Data loading issue when config file exists on second run
-  - Prevented `schedule_search()` from being called before data is loaded
-  - Added check to ensure conversations exist before triggering search
+### Technical Details
 
-- **Fixed**: HTML export border mapping for Message ID field
-  - Message ID cells no longer incorrectly inherit borders from Message column
-  - Message ID field correctly mapped to -1 (not a table column)
+#### Data Structures
+- Added `selection_borders` set to store selection region borders as `(min_row, max_row, min_col, max_col)` tuples.
+- Enhanced deduplication key to include `content_id` for more accurate duplicate detection.
 
-- **Fixed**: Label truncation in Export Options Dialog
-  - Added CSS styling to prevent QGroupBox title truncation
-  - "Export Scope (Select One)", "Sanitize Export", and "Fields to Include" labels now fully visible
-  - Improved spacing and layout to prevent checkbox overlap with titles
+#### Configuration Persistence
+- Selection borders are now saved and loaded with the application configuration.
+- Line number preservation ensures accurate CSV line number tracking.
 
-### Color Settings Dialog
-- **Added**: Comprehensive color settings dialog with organized categories
-  - Background Colors: Main, Widget, Alternate, Dialog, Table, Hover, Group Box, Legend
-  - Text Colors: Primary, Secondary
-  - Border Colors: Border, Cell Border
-  - Button Colors: Hover, Background
-  - Tag Colors: CSAM, Evidence, Of Interest, Custom
-  - Keyword Colors: Keyword Hit
-  - Sender Colors: Sender 1, Sender 2
-  - Row Colors: Default Row, Alternate Row
-  - Scrollable interface with grouped color options
-  - Monospace font for hex color codes
-  - Improved layout to prevent label truncation
+---
 
-### Technical Improvements
-- **Added**: `BorderedCellDelegate` class for rendering custom cell borders
-- **Added**: `copy_selected_cells()` method for clipboard functionality
-- **Added**: `ColorSettingsDialog` class for comprehensive color customization
-- **Enhanced**: `ThemeManager` class with custom color support and persistence
-- **Enhanced**: Progress save/load to include cell borders data
-- **Improved**: Table refresh mechanisms for border display updates
-- **Improved**: Dynamic stylesheet generation for all UI components
-- **Improved**: Configuration persistence for custom colors and cell borders
+## Files Modified
+- `KikAnalyzerV4.1.py` - Main application file with all improvements
+
+## Testing Recommendations
+1. Test deduplication with media files that exist in both CSV and log files.
+2. Verify line numbers match actual CSV line numbers.
+3. Test border feature with both single and multiple cell selections.
+4. Verify dialog readability on laptop displays.
+5. Test automatic update checking on startup.
 
