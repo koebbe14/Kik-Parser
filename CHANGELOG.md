@@ -1,74 +1,105 @@
-# Changelog - KikAnalyzer V4.2
+# Changelog - KikAnalyzer V4.2 → V4.3
 
-## Session Changes Summary
+## Version 4.3 - New Tag and Enhanced Blur Options
 
-### Data Processing & Deduplication
+## Summary
+This update adds the "Child Notable/Age Difficult" tag and enhanced blur options. The new tag provides better categorization for age-related content, while the new blur options offer more granular control over media sanitization in exports.
 
-#### Added support for text-msg-data.csv files containing a "content_id" column
-- **Issue**: Prior versions of the program will built around text-msg-data.csv files not containing a "content_id" column.  Instead, the content_id was obtained from various log .txt files.  Recieved media has been identifed in these new versions of the text-msg-data.csv files but not listed in the associated log files
-- **Fix**: Added support to find, analyze, and parse the text-msg-data.csv file for "content_IDs"
-- **Result**: Media files are now properly displayed if the records come from either the log files or the .csv files.  If the same content_id is found in mulitple records and has the same sender/user/time/date/ip, then the data is aggragated and compiled as one entry
+### New Features
 
+#### 1. New Default Tag: "Child Notable/Age Difficult"
+- Added "Child Notable/Age Difficult" as a new default/prebuilt tag
+- Tag is automatically available in all tag selection dialogs
+- Tag cannot be removed (protected as a default tag)
+- Tag appears in tag management interfaces with protection from deletion
+- Tag is automatically included in `available_tags` even when loading from older config files
 
-### User Interface Improvements
-
-#### Dialog Window Sizing for Laptop Displays
-- **Issue**: Initial dialog windows ("Import Kik Data" and "Select Kik Message CSV Files") were too small with hard-to-read text on laptop displays.
-- **Fixes**:
-  - **Import Kik Data Dialog**:
-    - Window size increased from 700x600 to 1200x900 pixels.
-    - Label font size increased to 24pt (QFont) and 26px (HTML).
-    - Heading font size increased to 31px (HTML).
-    - Button font size increased to 22pt with larger padding (18px 31px).
-    - Button minimum size increased to 176x55 pixels.
+#### 2. Enhanced Export Blur Options
+- **New Option**: "Blur Child Notable/Age Difficult-tagged" checkbox in export dialog
+  - Allows selective blurring of media tagged with "Child Notable/Age Difficult"
+  - Works independently of other blur options
   
-  - **Select Kik Message CSV Files Dialog**:
-    - Window size increased from 900x650 to 1200x900 pixels.
-    - Minimum size increased from 880x660 to 1100x800 pixels.
-    - All font sizes increased proportionally (labels: 24pt, buttons: 22pt, text edit: 22px).
-    - Button sizes and padding increased to match Import dialog.
+- **New Option**: "Blur Media That's Currently Blurred" checkbox in export dialog
+  - Blurs media that has been manually blurred in the GUI using the blur button
+  - Respects individual media blur states tracked by the application
+  - Useful for maintaining blur state consistency between GUI and exports
 
-#### Automatic Update Checking
-- **Feature**: Added automatic update checking on application startup.
-- **Behavior**:
-  - Checks for updates automatically 1 second after the main GUI is displayed.
-  - Only shows a message if an update is available (same message as manual check).
-  - Silently fails if no update is available or if there's an error (no message shown).
-  - Manual "Check for updates" button still works as before, showing all messages including "up to date" status.
+### Changes to Existing Features
 
-### Border Feature Enhancements
+#### Tag System
+- Updated `prebuilt_tags` list to include: `["Evidence", "CSAM", "Child Notable/Age Difficult", "Of Interest"]`
+- Added "Child Notable/Age Difficult" to `tag_priorities` with priority 2.5 (between CSAM and Evidence)
+- Tag priority order: CSAM (2) → Child Notable/Age Difficult (2.5) → Evidence (3) → Of Interest (1)
+- Updated `get_tag_color()` method to recognize and apply color to the new tag
 
-#### Selection Region Borders
-- **Issue**: When multiple cells were selected, "Add Border" placed individual borders around each cell instead of one border around the entire selection.
-- **Fix**: 
-  - Modified border logic to detect multiple cell selections.
-  - When multiple cells are selected, calculates the bounding rectangle and draws a single border around the entire selection region.
-  - Single cell selections still work as before (individual cell borders).
-  - Selection region borders are stored separately and persist in configuration.
+#### Theme and Color Management
+- Added `tag_child_notable` color to ThemeManager for both light and dark themes
+  - Light theme: `#ffa500` (Orange)
+  - Dark theme: `#ffa500` (Orange)
+- Added `tag_child_notable` to color customization options
+- Updated color label mapping to include "Child Notable/Age Difficult Tag"
 
-#### Increased Border Thickness
-- **Enhancement**: Increased border line thickness from 3px to 5px for better visibility.
-- **Applies to**: Both individual cell borders and selection region borders.
+#### Export Functionality
+- Enhanced blur logic in `export_messages()` to support multiple blur conditions:
+  - Blur all media (existing)
+  - Blur CSAM-tagged media (existing)
+  - Blur Child Notable/Age Difficult-tagged media (new)
+  - Blur currently blurred media (new)
+- Blur conditions are evaluated with OR logic - any matching condition will blur the media
+- Updated both image/video blur logic and non-media file handling
 
-### Technical Details
+#### HTML Export
+- Added "Child Notable/Age Difficult" to HTML export color legend
+- Added CSS styling for `tr.tag-child-notable` class in both light and dark modes
+- Updated tag filter dropdown in HTML export to include "Child Notable/Age Difficult"
+- Updated tag class assignment logic to recognize the new tag in priority order
+- Tag appears in exported HTML with proper color coding and filtering support
 
-#### Data Structures
-- Added `selection_borders` set to store selection region borders as `(min_row, max_row, min_col, max_col)` tuples.
-- Enhanced deduplication key to include `content_id` for more accurate duplicate detection.
+#### Help Documentation
+- Updated help dialog to include "Child Notable/Age Difficult" in color legend
+- Updated help text to mention the new tag in pre-built tags list
+- Updated export sanitization help text to describe new blur options
+- Updated tooltips to reference the new tag where applicable
 
-#### Configuration Persistence
-- Selection borders are now saved and loaded with the application configuration.
-- Line number preservation ensures accurate CSV line number tracking.
+#### Configuration Management
+- Enhanced `load_config()` to ensure all prebuilt tags are always included in `available_tags`
+- Prevents missing tags when loading from older config files
+- Maintains backward compatibility while adding new default tags
+
+#### Tag Management Dialog
+- Added protection for "Child Notable/Age Difficult" tag in `ManageTagsDialog`
+- Prevents deletion of the new default tag
+- Shows appropriate warning message when attempting to delete protected tags
+
+
+
+#### Export Options Dialog
+- Reorganized blur options for better clarity:
+  - "Blur CSAM-tagged" (renamed from "Blur Only Media Tagged as CSAM")
+  - "Blur Child Notable/Age Difficult-tagged" (new)
+  - "Blur All" (renamed from "Blur All Media")
+  - "Blur Media That's Currently Blurred" (new)
+- Added tooltips for new blur options explaining their functionality
+
+
+
+### Backward Compatibility
+- ✅ Fully backward compatible with existing config files
+- ✅ Existing tags and settings are preserved
+- ✅ Older exports remain functional
+- ✅ New tag automatically added to existing installations
+
+### Migration Notes
+- No manual migration required
+- Application will automatically include new tag on next startup
+- Existing tagged messages continue to work as before
+- New blur options are opt-in (disabled by default)
+
+### Bug Fixes
+- Fixed issue where prebuilt tags might not appear if config file was created before tag was added
+- Ensured all default tags are always available regardless of config file state
 
 ---
 
-## Files Modified
-- `KikAnalyzerV4.1.py` - Main application file with all improvements
 
-## Testing Recommendations
-1. Test deduplication with media files that exist in both CSV and log files.
-2. Verify line numbers match actual CSV line numbers.
-3. Test border feature with both single and multiple cell selections.
-4. Verify dialog readability on laptop displays.
-5. Test automatic update checking on startup.
 
