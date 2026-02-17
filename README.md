@@ -30,7 +30,7 @@
 
 ## Overview
 
-**Kik Analyzer V4.1** is a comprehensive graphical user interface (GUI) application designed for forensic analysis of Kik messaging data. The tool processes responsive records received from Kik pursuant to legal process, enabling investigators and analysts to efficiently parse, search, filter, tag, and export conversation data for evidentiary purposes.
+**Kik Analyzer V4.3** is a comprehensive graphical user interface (GUI) application designed for forensic analysis of Kik messaging data. The tool processes responsive records received from Kik pursuant to legal process, enabling investigators and analysts to efficiently parse, search, filter, tag, and export conversation data for evidentiary purposes.
 
 The application processes multiple data formats from Kik exports:
 - CSV message files from the `text-msg-data` folder
