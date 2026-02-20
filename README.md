@@ -1,4 +1,4 @@
-# Kik Analyzer V4.3
+# Kik Analyzer V4.4
 
 [![Version](https://img.shields.io/badge/version-4.1-blue.svg)](https://github.com/Koebbe14/Kik-Parser/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
