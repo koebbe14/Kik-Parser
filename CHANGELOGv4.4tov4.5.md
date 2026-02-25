@@ -5,8 +5,8 @@
 ### New Records Format Support
 
 - **Dual-format data loading**: The application now auto-detects and supports both the **legacy** format (`content/text-msg-data/` per-conversation CSV files + `.txt` log files) and the **new** Kik records format (`content/data-text.csv` and `content/data-media.csv` + `.csv` log files). Format detection is automatic based on the presence of `data-text.csv` or `data-media.csv` in the content folder.
-- **New-format content parsing**: Reads `data-text.csv` and `data-media.csv` directly from the content folder with column normalization (`id` → `msg_id`, `message` → `msg`, `sender_id` → `sender_jid`, `receiver_id` → `receiver_jid`, `sent_at_ts` epoch → `sent_at` datetime).
-- **New-format log file support**: Parses CSV-based log files (`chat_platform_sent.csv`, `group_send_msg_platform.csv`, `chat_platform_sent_received.csv`, `group_receive.csv`, `group_receive_msg_platform.csv`) alongside legacy `.txt` log files. Each CSV log file is mapped from its native column names (e.g., `user_jid`, `friend_user_jid`, `ts`, `cid`, `sender_ip`) to the internal schema.
+- **New-format content parsing**: Reads `data-text.csv` and `data-media.csv` directly from the content folder
+- **New-format log file support**: Parses CSV-based log files (`chat_platform_sent.csv`, `group_send_msg_platform.csv`, `chat_platform_sent_received.csv`, `group_receive.csv`, `group_receive_msg_platform.csv`) alongside legacy `.txt` log files. 
 - **Media files from `medias/` folder**: For the new format, media files are resolved from a `medias/` folder (under content or root) using the `filename` and `content_id` columns in `data-media.csv`.
 - **Updated import dialog**: The "Import Kik Data" dialog now explains both formats and no longer requires manual CSV file selection for the new format.
 
@@ -34,7 +34,4 @@
 - **Fixed multi-cell border detection**: The right-click context menu now correctly detects existing selection-region borders when determining whether to show "Add Border" or "Remove Border." Previously, only individual cell borders were checked.
 - **Fixed "Remove Border" for multi-cell regions**: "Remove Border" now appears in the context menu when right-clicking cells within an existing multi-cell border region. Removal works by finding and discarding all overlapping selection-region borders rather than requiring an exact selection match.
 
-### Other Changes
 
-- **`app_name` field in log structures**: Log file column definitions now include an `app_name` field for richer metadata from log records.
-- **Performance**: Selected-row highlighting uses a cached set (`_selected_rows_cache`) updated on selection change to avoid iterating the full selection list during every cell paint call.
