@@ -1,6 +1,6 @@
-# Kik Analyzer V4.4
+# Kik Analyzer V4.5
 
-[![Version](https://img.shields.io/badge/version-4.1-blue.svg)](https://github.com/Koebbe14/Kik-Parser/releases)
+[![Version](https://img.shields.io/badge/version-4.5-blue.svg)](https://github.com/Koebbe14/Kik-Parser/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
@@ -8,6 +8,7 @@
 
 ## 📋 Table of Contents
 
+- [What's New in V4.5](#whats-new-in-v45)
 - [Overview](#overview)
 - [Features](#features)
 - [System Requirements](#system-requirements)
@@ -28,14 +29,36 @@
 
 ---
 
+## What's New in V4.5
+
+### New Records Format Support
+V4.5 adds automatic detection and support for the **new Kik records format** alongside the existing legacy format. The application now reads `data-text.csv` and `data-media.csv` directly from the content folder, parses CSV-based log files (`chat_platform_sent.csv`, `group_send_msg_platform.csv`, `chat_platform_sent_received.csv`, `group_receive.csv`), and resolves media from a `medias/` folder — all without requiring manual file selection.
+
+### File Menu and Button Relocation
+A new **File** menu has been added to the menu bar, containing **Manage Tags**, **Manage Hotkeys**, **Load New Data**, **Check for Updates**, and **Help**. These actions were removed from the bottom toolbar to reduce clutter and improve the layout.
+
+### Group Legend
+A new **Group Legend** button in the toolbar opens a dialog displaying group metadata loaded from `group-legend-[username].csv`, including GID, name, code, public/deleted status, last activity, and computed send/receive message counts. The legend can be exported to CSV.
+
+### Table Selection and Row Highlighting
+Clicking any cell in the message table now highlights the **entire row** with a soft background color for readability, while the selected cell is shown with a **darker highlight**. The right-click menu now offers both **"Copy Selected Cells"** and **"Copy Selected Rows"**. Multi-select via Ctrl+click and Shift+click is fully supported.
+
+### Border Improvements
+Fixed issues with multi-cell border regions: the right-click menu now correctly detects existing selection-region borders and shows the **"Remove Border"** option. Removal works by matching any overlapping region rather than requiring an exact selection.
+
+> For a full list of changes, see [CHANGELOG.md](CHANGELOG.md).
+
+---
+
 ## Overview
 
-**Kik Analyzer V4.3** is a comprehensive graphical user interface (GUI) application designed for forensic analysis of Kik messaging data. The tool processes responsive records received from Kik pursuant to legal process, enabling investigators and analysts to efficiently parse, search, filter, tag, and export conversation data for evidentiary purposes.
+**Kik Analyzer V4.5** is a comprehensive graphical user interface (GUI) application designed for forensic analysis of Kik messaging data. The tool processes responsive records received from Kik pursuant to legal process, enabling investigators and analysts to efficiently parse, search, filter, tag, and export conversation data for evidentiary purposes.
 
 The application processes multiple data formats from Kik exports:
-- CSV message files from the `text-msg-data` folder
-- Log files from the `logs` folder (including `chat_platform_sent.txt`, `chat_platform_sent_received.txt`, `group_receive_msg_platform.txt`, `group_send_msg_plaform.txt`)
-- Media files (images and videos) from the `content` folder
+- **Legacy format**: CSV message files from `content/text-msg-data/` and `.txt` log files from `logs/`
+- **New format**: `data-text.csv` and `data-media.csv` from `content/` and `.csv` log files from `logs/`
+- **Log files**: `chat_platform_sent`, `chat_platform_sent_received`, `group_send_msg_platform`, `group_receive`/`group_receive_msg_platform` (both `.txt` and `.csv` variants)
+- **Media files**: Images and videos from the `content` folder (legacy) or `medias/` folder (new format)
 
 ---
 
@@ -94,15 +117,18 @@ The application processes multiple data formats from Kik exports:
 ### Data Requirements
 
 - **Kik Data Export**: Unzipped Kik data folder obtained through legal means (search warrant, etc.)
-- **Required Folder Structure**:
+- **Required Folder Structure** (one of the two formats):
   ```
-  Kik Data Folder/
-  ├── content/
-  │   ├── text-msg-data/
-  │   │   └── *.csv (message files)
-  │   └── [media files]
-  └── logs/
-      └── *.txt (log files)
+  Legacy Format:                     New Format:
+  Kik Data Folder/                   Kik Data Folder/
+  ├── content/                       ├── content/
+  │   ├── text-msg-data/             │   ├── data-text.csv
+  │   │   └── *.csv (messages)       │   ├── data-media.csv
+  │   └── [media files]              │   └── medias/
+  └── logs/                          │       └── [media files]
+      └── *.txt (log files)          ├── logs/
+                                     │   └── *.csv (log files)
+                                     └── group-legend-*.csv (optional)
   ```
 
 ---
@@ -112,14 +138,14 @@ The application processes multiple data formats from Kik exports:
 ### Download
 
 1. Navigate to the [Releases](https://github.com/Koebbe14/Kik-Parser/releases) page
-2. Download the latest `KikAnalyzerV4.1.exe` file
+2. Download the latest `KikAnalyzerV4.5.exe` file
 3. Place the executable in your desired installation directory
 
 > **Note**: The application will create configuration files, keyword lists, and logs in the directory:  C:\Users\\[Username]
 
 ### First Run
 
-1. Double-click `KikAnalyzerV4.1.exe` to launch the application
+1. Double-click `KikAnalyzerV4.5.exe` to launch the application
 2. The application will prompt you to load Kik data on first launch
 3. Configuration files (`config.json`) will be created automatically
 
@@ -127,9 +153,9 @@ The application processes multiple data formats from Kik exports:
 
 ## Quick Start
 
-1. **Launch Application**: Double-click `KikAnalyzerV4.1.exe`
-2. **Load Data**: Click "Load New Data" and select your unzipped Kik data folder
-3. **Select CSV Files**: Choose one or more CSV files from the `text-msg-data` folder
+1. **Launch Application**: Double-click `KikAnalyzerV4.5.exe`
+2. **Load Data**: Go to **File > Load New Data** and select your unzipped Kik data folder
+3. **Select CSV Files**: For the legacy format, choose CSV files from `text-msg-data`. For the new format, `data-text.csv` and `data-media.csv` are loaded automatically.
 4. **Select Conversation**: Use the dropdown to choose a conversation to analyze
 5. **Search & Filter**: Use the search bar and date filters to find specific messages
 6. **Tag Messages**: Right-click messages or use hotkeys (Ctrl+1, Ctrl+2, Ctrl+3) to tag
@@ -143,27 +169,29 @@ The application processes multiple data formats from Kik exports:
 
 #### Initial Data Load
 
-1. Click the **"Load New Data"** button in the toolbar
+1. Go to **File > Load New Data** (or click the toolbar button if present)
 2. In the file dialog, navigate to and select the root Kik data folder containing:
-   - `content` subfolder (with `text-msg-data` and media files)
-   - `logs` subfolder (with `.txt` log files)
+   - `content` subfolder (with message data and media files)
+   - `logs` subfolder (with log files)
 3. Click **"OK"** to proceed
-4. In the CSV selection dialog, browse and select one or more CSV files from the `text-msg-data` folder
-5. Click **"OK"** to begin processing
+4. **Legacy format**: In the CSV selection dialog, browse and select one or more CSV files from the `text-msg-data` folder, then click **"OK"**
+5. **New format**: `data-text.csv` and `data-media.csv` are loaded automatically — no file selection needed
 
 #### Data Processing
 
 During data loading, the application will:
-- Index all media files (images/videos) from the `content` folder
-- Parse CSV files for message data
-- Parse log files for additional message metadata
+- Detect the data format (legacy or new) automatically
+- Index all media files (images/videos) from the `content` folder or `medias/` folder
+- Parse CSV files for message data (per-conversation CSVs or unified `data-text.csv`/`data-media.csv`)
+- Parse log files (`.txt` or `.csv`) for additional message metadata
+- Load group legend data from `group-legend-*.csv` if present
 - Group messages into conversations (1:1 chats and group chats)
 - Associate sent/received media with conversations
 - Display "Data loaded successfully" in the status bar
 
 #### Reloading Data
 
-Click **"Load New Data"** at any time to restart the data loading process or load another case. This will clear existing data and load fresh data.
+Go to **File > Load New Data** at any time to restart the data loading process or load another case. This will clear existing data and load fresh data.
 
 ---
 
@@ -208,9 +236,10 @@ Click **"Load New Data"** at any time to restart the data loading process or loa
 
 #### Pre-built Tags
 
-The application includes three pre-built tags with default colors:
+The application includes four pre-built tags with default colors:
 - **CSAM** (Red) - For child sexual abuse material
 - **Evidence** (Orange) - For evidentiary messages
+- **Child Notable/Age Difficult** (Orange) - For messages involving age-related concerns
 - **Of Interest** (Yellow) - For messages requiring further review
 
 #### Tagging via Context Menu
@@ -235,7 +264,7 @@ To use:
 
 #### Managing Tags
 
-1. Click the **"Manage Tags"** button in the toolbar
+1. Go to **File > Manage Tags**
 2. In the dialog:
    - **Add**: Create new custom tags
    - **Edit**: Modify existing tag names and colors
@@ -244,7 +273,7 @@ To use:
 
 #### Managing Hotkeys
 
-1. Click the **"Manage Hotkeys"** button in the toolbar
+1. Go to **File > Manage Hotkeys**
 2. Assign key sequences (e.g., Ctrl+4, Ctrl+5) to tags
 3. Click **"Save"** to activate shortcuts
 
@@ -408,12 +437,13 @@ Choose which fields to include in the export:
 #### Theme Customization
 
 - The application supports light and dark themes
-- Access color settings through the via the View button
-- Color settings are saved in configuration
+- Toggle dark mode via **View > Toggle Dark Mode**
+- Customize all colors (including row/cell highlight colors) via **View > Color Settings**
+- Color settings are saved in configuration and applied to both the GUI and HTML exports
 
 #### Update Checking
 
-- Click the **"Check for Updates"** button to check for newer versions
+- Go to **File > Check for updates** to check for newer versions
 - The application connects to GitHub to check for updates
 - If an update is available, you'll be directed to the releases page
 
@@ -423,13 +453,16 @@ Choose which fields to include in the export:
 
 ### File Formats Supported
 
-- **CSV Files**: Comma-separated values from Kik's `text-msg-data` folder
-- **Log Files**: Plain text log files from Kik's `logs` folder:
-  - `chat_platform_sent.txt`
-  - `chat_platform_sent_received.txt`
-  - `group_receive_msg_platform.txt`
-  - `group_send_msg_plaform.txt`
-- **Media Files**: Images and videos indexed from the `content` folder
+- **Legacy CSV Files**: Per-conversation CSV files from Kik's `content/text-msg-data/` folder
+- **New Format CSV Files**: Unified `data-text.csv` and `data-media.csv` from Kik's `content/` folder
+- **Legacy Log Files** (`.txt`): Plain text, tab-delimited log files from the `logs/` folder
+- **New Format Log Files** (`.csv`): CSV log files from the `logs/` folder:
+  - `chat_platform_sent` (`.txt` or `.csv`)
+  - `chat_platform_sent_received` (`.txt` or `.csv`)
+  - `group_send_msg_platform` (`.txt` or `.csv`)
+  - `group_receive` / `group_receive_msg_platform` (`.txt` or `.csv`)
+- **Group Legend**: Optional `group-legend-[username].csv` for group metadata
+- **Media Files**: Images and videos from the `content` folder (legacy) or `content/medias/` folder (new format)
 
 ### Configuration Files
 
@@ -534,7 +567,7 @@ To enable detailed logging for troubleshooting:
 
 ### Getting Help
 
-1. Check the **"Help"** button in the application for built-in instructions
+1. Go to **File > Help** in the application for built-in instructions
 2. Review this README for detailed feature documentation
 3. Check the log file (`kik_analyzer.log`) for error details
 4. Verify your Kik data folder structure matches requirements
@@ -545,8 +578,8 @@ To enable detailed logging for troubleshooting:
 
 ### Version Information
 
-- **Current Version**: 4.1
-- **Release Notes**: Includes delete keyword list feature and various improvements
+- **Current Version**: 4.5
+- **Release Notes**: See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes
 
 ### Updates
 
@@ -566,7 +599,7 @@ Proprietary software. All rights reserved.
 
 ## Acknowledgments
 
-Kik Analyzer V4.1 is developed for forensic analysis purposes. The tool processes data exported from Kik's servers pursuant to legal process and is intended for use by law enforcement, legal professionals, and authorized investigators.
+Kik Analyzer V4.5 is developed for forensic analysis purposes. The tool processes data exported from Kik's servers pursuant to legal process and is intended for use by law enforcement, legal professionals, and authorized investigators.
 
 ---
 
@@ -600,5 +633,5 @@ For support, feature requests, or collaborations, contact: koebbe14@gmail.com.
 
 
 **Last Updated**: 2026  
-**Version**: 4.1  
+**Version**: 4.5  
 **Platform**: Windows
